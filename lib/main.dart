@@ -1,9 +1,14 @@
 import 'dart:collection';
+import 'dart:math';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -43,40 +48,61 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
 
-
+  var kisi = FirebaseDatabase.instance.ref().child("cards");
 
   List<Container> cards = [
     Container(
-      alignment: Alignment.center,
-      color: Colors.black,
-      child: const Text('1'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("Selamlar"))),
+        color: Colors.greenAccent,
+      ),
     ),
     Container(
-      alignment: Alignment.center,
-      color: Colors.red,
-      child: const Text('2'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("Cat = Kedi"))),
+        color: Colors.redAccent,
+      ),
     ),
     Container(
-      alignment: Alignment.center,
-      color: Colors.purple,
-      child: const Text('3'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("qwertyu"))),
+        color: Colors.deepPurpleAccent,
+      ),
     ),
     Container(
-      alignment: Alignment.center,
-      color: Colors.yellow,
-      child: const Text('4'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("bbbbbbb"))),
+        color: Colors.teal,
+      ),
     ),
     Container(
-      alignment: Alignment.center,
-      color: Colors.orangeAccent,
-      child: const Text('5'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("Selamlar"))),
+        color: Colors.amber,
+      ),
     ),
     Container(
-      alignment: Alignment.center,
-      color: Colors.greenAccent,
-      child: const Text('6'),
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("Selamlar"))),
+        color: Colors.white,
+      ),
+    ),
+    Container(
+      child: Card(
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(30))),
+        child: SizedBox.expand(child: Center(child: Text("Selamlar"))),
+        color: Colors.brown,
+      ),
     ),
   ];
+
+
 
   CardSwiperController _controller = CardSwiperController();
 
