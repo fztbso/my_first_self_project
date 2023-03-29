@@ -1,14 +1,13 @@
 import 'dart:collection';
 import 'dart:math';
 
-import 'package:firebase_core/firebase_core.dart';
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_card_swiper/flutter_card_swiper.dart';
 
-Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+import 'mainPage.dart';
+
+void main() async {
+
   runApp(const MyApp());
 }
 
@@ -22,15 +21,9 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.blue,
-        appBarTheme: const AppBarTheme(
-          backgroundColor: Colors.deepPurpleAccent,
-          shadowColor: Colors.black,
-          elevation: 20,
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.only(bottomLeft: Radius.circular(20), bottomRight: Radius.circular(20))),
-        ),
         scaffoldBackgroundColor: Colors.grey[300]
       ),
-      home: const MyHomePage(title: 'My First Project'),
+      home: const mainPage(),
     );
   }
 }
@@ -47,8 +40,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-
-  var kisi = FirebaseDatabase.instance.ref().child("cards");
 
   List<Container> cards = [
     Container(
@@ -103,7 +94,6 @@ class _MyHomePageState extends State<MyHomePage> {
   ];
 
 
-
   CardSwiperController _controller = CardSwiperController();
 
   @override
@@ -113,49 +103,48 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        children: [
-          SizedBox(
-            height: MediaQuery.of(context).size.height*0.5,
-            child: Center(
-              child: Flexible(
-                    child: CardSwiper(
-                      cardBuilder: (context, index) => cards[index],
-                      cardsCount: cards.length,
-                      controller: _controller,
-                      numberOfCardsDisplayed: 2,
-              )),
-            ),
+      children: [
+        SizedBox(
+          height: MediaQuery.of(context).size.height*0.5,
+          child: Center(
+            child: Flexible(
+                  child: CardSwiper(
+                    cardBuilder: (context, index) => cards[index],
+                    cardsCount: cards.length,
+                    controller: _controller,
+                    numberOfCardsDisplayed: 2,
+            )),
           ),
-          Divider(),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              ElevatedButton(
+        ),
+        Divider(thickness: 3,),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.redAccent
+              ),
+                onPressed: (){
+              _controller.swipeLeft();
+            }, child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text("Tekrar Göster"),
+            )),
+            Icon(Icons.graphic_eq),
+            ElevatedButton(
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.redAccent
+                    backgroundColor: Colors.green
                 ),
-                  onPressed: (){
-                _controller.swipeLeft();
-              }, child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text("Tekrar Göster"),
-              )),
-              VerticalDivider(),
-              ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.green
-                  ),
-                  onPressed: (){
-                _controller.swipeRight();
-              }, child: Padding(
-                padding: const EdgeInsets.all(18.0),
-                child: Text("Ezberledim"),
-              )),
-            ],
-          ),
-
-        ],
-      ),
+                onPressed: (){
+              _controller.swipeRight();
+            }, child: Padding(
+              padding: const EdgeInsets.all(18.0),
+              child: Text("Ezberledim"),
+            )),
+          ],
+        ),
+      ],
+        ),
       floatingActionButton: FloatingActionButton(
         onPressed: (){},
         child: const Text("S.A."),
